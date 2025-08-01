@@ -1,94 +1,68 @@
-import { aboutModal } from "./aboutModal.js";
+import { motivation } from "./motivation";
 
-// Call the aboutModal function
-aboutModal();
+export function exercise() {
+    document
+        .getElementById("exerciseForm")
+        .addEventListener("submit", function (event) {
+            event.preventDefault();
 
-// Listen for form submission
-document
-    .getElementById("exerciseForm")
-    .addEventListener("submit", function (event) {
-        event.preventDefault(); // Prevent the form from submitting the traditional way
+            const muscle = document.getElementById("muscle").value.trim();
+            const searchTerm = document.getElementById("exerciseType").value.trim(); // renamed to searchTerm
+            motivation();
+            exerciseApiFetch(searchTerm, muscle);
+        });
+}
 
-        // Get the value from the input field
-        const muscle = document.getElementById("muscle").value.trim();
-        const exerciseType = document
-            .getElementById("exerciseType")
-            .value.trim();
-        const difficulty = document.getElementById("difficulty").value.trim();
+async function exerciseApiFetch(searchTerm, muscle) {
+    console.log("Fetching from ExerciseDB API...");
 
-        // Call the API function with the city name
-        exerciseApiFetch(exerciseType, muscle, difficulty);
-    });
-
-// const muscle = "biceps";
-// const type = "strength";
-// const difficulty = "easy";
-// The function to call the location api
-async function exerciseApiFetch(type, muscle, difficulty) {
-    console.log(muscle);
-
-    const url = `https://api.api-ninjas.com/v1/exercises?type=${type}&muscle=${muscle}&difficulty=${difficulty}`;
+    const url = `https://exercisedb.p.rapidapi.com/exercises/target/${muscle.toLowerCase()}`;
 
     const options = {
-        method: "GET",
+        method: 'GET',
         headers: {
-            "X-Api-Key": "JqVU78FmGF8DRs5wmCnWaA==BYYns69uqwTlcmyd",
-            "Content-Type": "application/json",
-        },
+            'X-RapidAPI-Key': '9ff379a01cmsh0029cf3a9b8825ep1d461ajsn8d027b8bc331', // It's not live yet, just setting here for now
+            'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com'
+        }
     };
+
     try {
         const response = await fetch(url, options);
-        if (response.ok) {
-            const result = await response.json();
-            console.log(result);
-            displayResults(result);
-        } else {
-            throw new Error(await response.text());
-        }
+        const result = await response.json();
+
+        const filtered = result.filter(ex =>
+            !searchTerm || ex.name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+
+        displayResults(filtered);
     } catch (error) {
-        console.error(error);
+        console.error("Error fetching exercises:", error);
+        document.querySelector(".cards").innerHTML = `<p>Failed to fetch exercises. Try again later.</p>`;
     }
 }
 
-// difficulty: "beginner";
-// equipment: "dumbbell";
-// instructions: "Seat yourself on an incline bench with a dumbbell in each hand. You should pressed firmly against he back with your feet together. Allow the dumbbells to hang straight down at your side, holding them with a neutral grip. This will be your starting position. Initiate the movement by flexing at the elbow, attempting to keep the upper arm stationary. Continue to the top of the movement and pause, then slowly return to the start position.";
-// muscle: "biceps";
-// name: "Incline Hammer Curls";
-// type: "strength";
-
 function displayResults(result) {
-    let cardsHTML = ""; // Accumulate the HTML here
+    if (result.length === 0) {
+        document.querySelector(".cards").innerHTML = `<p>No exercises found. Try different filters.</p>`;
+        return;
+    }
+
+    let cardsHTML = "";
 
     result.forEach((workout) => {
         const workoutCardTemplate = `
             <article class="card">
                 <h2>${workout.name}</h2>
                 <ul>
-                    <li><strong>Difficulty:</strong> ${
-                        workout.difficulty.charAt(0).toUpperCase() +
-                        workout.difficulty.slice(1)
-                    }</li>
-                    <li><strong>Equipment:</strong> ${
-                        workout.equipment.charAt(0).toUpperCase() +
-                        workout.equipment.slice(1)
-                    }</li>
-                    <li><strong>Type:</strong> ${
-                        workout.type.charAt(0).toUpperCase() +
-                        workout.type.slice(1)
-                    }</li>
-                    <li><strong>Muscle Worked:</strong> ${
-                        workout.muscle.charAt(0).toUpperCase() +
-                        workout.muscle.slice(1)
-                    }</li>
+                    <li><strong>Equipment:</strong> ${workout.equipment}</li>
+                    <li><strong>Target Muscle:</strong> ${workout.target}</li>
+                    <li><strong>Body Part:</strong> ${workout.bodyPart}</li>
                 </ul>
-                <p>Instructions: ${workout.instructions}</p>
+                <img src="${workout.gifUrl}" alt="Exercise gif for ${workout.name}" loading="lazy" />
             </article>
         `;
-
-        cardsHTML += workoutCardTemplate; // Add to the accumulated HTML
+        cardsHTML += workoutCardTemplate;
     });
 
-    // Update the container once, after the loop
     document.querySelector(".cards").innerHTML = cardsHTML;
 }
