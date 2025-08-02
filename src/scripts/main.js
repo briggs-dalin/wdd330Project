@@ -15,10 +15,11 @@ async function loadMuscleGroups() {
     const data = await response.json();
 
     // Clear existing options and add default
-    muscleSelect.innerHTML = '<option value="">-- Select a Muscle Group --</option>';
+    muscleSelect.innerHTML =
+      '<option value="">-- Select a Muscle Group --</option>';
 
     // Populate muscle groups from JSON
-    data.muscleGroups.forEach(muscle => {
+    data.muscleGroups.forEach((muscle) => {
       const option = document.createElement("option");
       option.value = muscle.value;
       option.textContent = muscle.name;
@@ -28,7 +29,8 @@ async function loadMuscleGroups() {
     muscleSelect.disabled = false; // Enable dropdown after loading
   } catch (error) {
     console.error(error);
-    muscleSelect.innerHTML = '<option value="">Failed to load muscle groups</option>';
+    muscleSelect.innerHTML =
+      '<option value="">Failed to load muscle groups</option>';
     muscleSelect.disabled = true;
   }
 }
