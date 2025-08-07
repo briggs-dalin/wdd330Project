@@ -1,4 +1,7 @@
 export function motivation() {
+  const quoteContainer = document.getElementById("quote");
+  quoteContainer.innerHTML = ""; // Clear previous quote to avoid duplicates
+
   fetchMotivationQuote();
 
   async function fetchMotivationQuote() {
@@ -6,16 +9,15 @@ export function motivation() {
 
     try {
       const response = await fetch(url);
-      if (response.ok) {
-        const result = await response.json();
-        displayQuote(result[0]);
-      } else {
-        throw new Error(await response.text());
-      }
+      if (!response.ok) throw new Error(await response.text());
+
+      const result = await response.json();
+      displayQuote(result[0]);
     } catch (error) {
       console.error("Motivational quote fetch failed:", error);
-      document.getElementById("quote").innerHTML = `
-        <p class="quote">Keep going! You're doing great!</p>
+      quoteContainer.innerHTML = `
+        <p class="quote">Believe you can and you're halfway there.  </p>
+        <p class="author">- Theodore Roosevelt</p>
       `;
     }
   }
@@ -25,6 +27,6 @@ export function motivation() {
       <p class="quote">"${quoteObj.q}"</p>
       <p class="author">- ${quoteObj.a}</p>
     `;
-    document.getElementById("quote").innerHTML = quoteHTML;
+    quoteContainer.innerHTML = quoteHTML;
   }
 }

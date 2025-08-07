@@ -1,27 +1,27 @@
 import { motivation } from "./motivation.js";
 
 export function exercise() {
-  document
-    .getElementById("exerciseForm")
-    .addEventListener("submit", function (event) {
-      event.preventDefault();
+  document.getElementById("exerciseForm").addEventListener("submit", function (event) {
+    event.preventDefault();
 
-      const muscle = document.getElementById("muscle").value.trim();
-      const searchTerm = document.getElementById("exerciseType").value.trim();
+    const muscle = document.getElementById("muscle").value.trim();
+    const searchTerm = document.getElementById("exerciseType").value.trim();
 
-      motivation(); // Show motivation
-      exerciseApiFetch(searchTerm, muscle); // Fetch workouts
-    });
+    motivation(); // Show motivation
+    exerciseApiFetch(searchTerm, muscle); // Fetch workouts
+  });
 }
 
 async function exerciseApiFetch(searchTerm, muscle) {
   console.log("Fetching from ExerciseDB API...");
 
+  const apiKey = import.meta.env.VITE_EXERCISEDB_API_KEY;
+
   const url = `https://exercisedb.p.rapidapi.com/exercises/target/${muscle.toLowerCase()}`;
   const options = {
     method: "GET",
     headers: {
-      "X-RapidAPI-Key": "9ff379a01cmsh0029cf3a9b8825ep1d461ajsn8d027b8bc331",
+      "X-RapidAPI-Key": apiKey,
       "X-RapidAPI-Host": "exercisedb.p.rapidapi.com",
     },
   };
@@ -37,24 +37,18 @@ async function exerciseApiFetch(searchTerm, muscle) {
     displayResults(filtered);
   } catch (error) {
     console.error("Error fetching exercises:", error);
-    document.querySelector(".cards").innerHTML = `
-      <article class="card card-error">
-        <h2>Error</h2>
-        <p>Failed to fetch exercises. Please try again later.</p>
-      </article>
-    `;
+    displayError("Failed to fetch exercises. Please try again later.");
   }
 }
 
 function displayResults(result) {
   const container = document.querySelector(".cards");
 
-  if (result.length === 0) {
+  if (!result || result.length === 0) {
     container.innerHTML = `
       <article class="card card-error">
-        <h2>No Information Available</h2>
-        <p>Sorry, no exercises were found for your selection.</p>
-        <p>Please try different filters.</p>
+        <h2>No Results</h2>
+        <p>We couldn't find exercises with those filters. Try something else!</p>
       </article>
     `;
     return;
@@ -62,8 +56,7 @@ function displayResults(result) {
 
   const cardsHTML = result
     .map((workout) => {
-      const diffClass = getDifficultyClass(workout.difficulty); // Might be undefined
-
+      const diffClass = getDifficultyClass(workout.difficulty);
       return `
         <article class="card">
           <h2>${capitalize(workout.name)}</h2>
@@ -88,6 +81,15 @@ function displayResults(result) {
     .join("");
 
   container.innerHTML = cardsHTML;
+}
+
+function displayError(message) {
+  document.querySelector(".cards").innerHTML = `
+    <article class="card card-error">
+      <h2>Error</h2>
+      <p>${message}</p>
+    </article>
+  `;
 }
 
 // Helper Functions
