@@ -1,9 +1,10 @@
 import { aboutModal } from "./aboutModal.js";
 import { exercise } from "./exercise.js";
+import { motivation } from "./motivation.js";
 
-// Call the aboutModal and exercise setup functions
 aboutModal();
 exercise();
+
 
 async function loadMuscleGroups() {
   const muscleSelect = document.getElementById("muscle");
@@ -14,11 +15,9 @@ async function loadMuscleGroups() {
 
     const data = await response.json();
 
-    // Clear existing options and add default
     muscleSelect.innerHTML =
       '<option value="">-- Select a Muscle Group --</option>';
 
-    // Populate muscle groups from JSON
     data.muscleGroups.forEach((muscle) => {
       const option = document.createElement("option");
       option.value = muscle.value;
@@ -26,7 +25,7 @@ async function loadMuscleGroups() {
       muscleSelect.appendChild(option);
     });
 
-    muscleSelect.disabled = false; // Enable dropdown after loading
+    muscleSelect.disabled = false;
   } catch (error) {
     console.error(error);
     muscleSelect.innerHTML =
@@ -35,7 +34,7 @@ async function loadMuscleGroups() {
   }
 }
 
-// Wait for DOM content loaded before trying to manipulate the DOM
 document.addEventListener("DOMContentLoaded", () => {
   loadMuscleGroups();
+  motivation();
 });
