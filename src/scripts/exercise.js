@@ -1,8 +1,16 @@
 import { motivation } from "./motivation.js";
 
 export function exercise() {
-  document.getElementById("exerciseForm").addEventListener("submit", function (event) {
+  const form = document.getElementById("exerciseForm");
+  if (!form) {
+    console.error("exerciseForm not found");
+    return;
+  }
+  console.log("Adding submit event listener to exerciseForm");
+
+  form.addEventListener("submit", function (event) {
     event.preventDefault();
+    console.log("exerciseForm submitted");
 
     const muscle = document.getElementById("muscle").value.trim();
     const searchTerm = document.getElementById("exerciseType").value.trim();
@@ -12,7 +20,7 @@ export function exercise() {
   });
 }
 
-async function exerciseApiFetch(searchTerm, muscle) {
+async function exerciseApiFetch(searchTerm, muscle, difficulty) {
   console.log("Fetching from ExerciseDB API...");
 
   const apiKey = import.meta.env.VITE_EXERCISEDB_API_KEY;
@@ -30,9 +38,11 @@ async function exerciseApiFetch(searchTerm, muscle) {
     const response = await fetch(url, options);
     const result = await response.json();
 
-    const filtered = result.filter((ex) =>
-      !searchTerm || ex.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const filtered = result.filter((ex) => {
+      const matchesSearchTerm = !searchTerm || ex.name.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesDifficulty = !difficulty || (ex.difficulty && ex.difficulty.toLowerCase() === difficulty.toLowerCase());
+      return matchesSearchTerm && matchesDifficulty;
+    });
 
     displayResults(filtered);
   } catch (error) {
