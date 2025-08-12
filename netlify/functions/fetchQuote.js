@@ -6,7 +6,10 @@ export async function handler(event, context) {
 
     // Log response status and headers for debugging
     console.log(`ZenQuotes API response status: ${response.status}`);
-    console.log(`ZenQuotes API response headers:`, JSON.stringify([...response.headers]));
+    console.log(
+      `ZenQuotes API response headers:`,
+      JSON.stringify([...response.headers]),
+    );
 
     // Parse JSON response body
     const data = await response.json();
@@ -15,7 +18,10 @@ export async function handler(event, context) {
     if (!response.ok) {
       return {
         statusCode: response.status,
-        body: JSON.stringify({ error: `API error with status ${response.status}`, data }),
+        body: JSON.stringify({
+          error: `API error with status ${response.status}`,
+          data,
+        }),
       };
     }
 

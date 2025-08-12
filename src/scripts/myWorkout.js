@@ -15,7 +15,10 @@ export function setupFavoriteMuscle() {
     // Highlight muscle buttons if any
     const muscleButtons = document.querySelectorAll(".button-muscle");
     muscleButtons.forEach((btn) => {
-      btn.classList.toggle("active", btn.getAttribute("data-muscle") === favoriteMuscle);
+      btn.classList.toggle(
+        "active",
+        btn.getAttribute("data-muscle") === favoriteMuscle,
+      );
     });
   }
 
@@ -29,7 +32,10 @@ export function setupFavoriteMuscle() {
       // Highlight buttons accordingly
       const muscleButtons = document.querySelectorAll(".button-muscle");
       muscleButtons.forEach((btn) => {
-        btn.classList.toggle("active", btn.getAttribute("data-muscle") === selectedMuscle);
+        btn.classList.toggle(
+          "active",
+          btn.getAttribute("data-muscle") === selectedMuscle,
+        );
       });
 
       alert(`Saved favorite muscle: ${selectedMuscle}`);

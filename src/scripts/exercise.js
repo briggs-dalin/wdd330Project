@@ -1,7 +1,9 @@
 const exerciseApiKey = import.meta.env.VITE_EXERCISEDB_API_KEY;
 
 if (!exerciseApiKey) {
-  console.error("API key is missing. Set VITE_EXERCISEDB_API_KEY in .env for dev and on Netlify for prod.");
+  console.error(
+    "API key is missing. Set VITE_EXERCISEDB_API_KEY in .env for dev and on Netlify for prod.",
+  );
 }
 
 export function exercise() {
@@ -33,8 +35,8 @@ async function exerciseApiFetch(muscleGroup, exerciseResults) {
       method: "GET",
       headers: {
         "x-rapidapi-key": exerciseApiKey,
-        "x-rapidapi-host": "exercisedb.p.rapidapi.com"
-      }
+        "x-rapidapi-host": "exercisedb.p.rapidapi.com",
+      },
     });
 
     if (!response.ok) {
@@ -57,16 +59,16 @@ function displayExercises(exercises, container) {
     return;
   }
 
-  exercises.forEach(exercise => {
+  exercises.forEach((currentExercise) => {
     const difficulty = exercise.difficulty || "Unknown";
 
     const exerciseCard = document.createElement("div");
     exerciseCard.classList.add("exercise-card");
     exerciseCard.innerHTML = `
-      <h3>${exercise.name}</h3>
-      <p><strong>Target:</strong> ${exercise.target}</p>
+      <h3>${currentExercise.name}</h3>
+      <p><strong>Target:</strong> ${currentExercise.target}</p>
       <p><strong>Difficulty:</strong> ${difficulty}</p>
-      <img src="${exercise.gifUrl}" alt="${exercise.name}" loading="lazy">
+      <img src="${currentExercise.gifUrl}" alt="${currentExercise.name}" loading="lazy">
     `;
     container.appendChild(exerciseCard);
   });

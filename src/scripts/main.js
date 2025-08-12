@@ -5,9 +5,9 @@ import { setupFavoriteMuscle } from "./myWorkout.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   aboutModal();
-  exercise(); 
+  exercise();
   setupFavoriteMuscle();
-  motivation(); 
+  motivation();
 
   loadMuscleGroups();
 });
@@ -21,7 +21,8 @@ async function loadMuscleGroups() {
 
     const data = await response.json();
 
-    muscleSelect.innerHTML = '<option value="">-- Select a Muscle Group --</option>';
+    muscleSelect.innerHTML =
+      '<option value="">-- Select a Muscle Group --</option>';
 
     data.muscleGroups.forEach((muscle) => {
       const option = document.createElement("option");
@@ -33,7 +34,8 @@ async function loadMuscleGroups() {
     muscleSelect.disabled = false;
   } catch (error) {
     console.error(error);
-    muscleSelect.innerHTML = '<option value="">Failed to load muscle groups</option>';
+    muscleSelect.innerHTML =
+      '<option value="">Failed to load muscle groups</option>';
     muscleSelect.disabled = true;
   }
 }

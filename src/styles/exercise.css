@@ -230,8 +230,8 @@ main {
 /* Exercise Cards */
 
 #exercise-cards {
-    display: flex;
-    margin: 2rem 3rem;
+  display: flex;
+  margin: 2rem 3rem;
 }
 
 .cards {
@@ -251,45 +251,45 @@ main {
 }
 
 .card {
-   display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    padding: 20px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    background-color: #ffffff;
-    border-radius: 4px;
-    column-gap: 20px;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  padding: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  background-color: #ffffff;
+  border-radius: 4px;
+  column-gap: 20px;
+  width: 100%;
 }
 .card h2 {
-    font-size: 1.5rem;
-    margin: 0 20px 10px 20px;
+  font-size: 1.5rem;
+  margin: 0 20px 10px 20px;
 }
 .card-info {
-    display: grid;
-    grid-template-columns: 0.8fr 3fr;
-    column-gap: 10px;
+  display: grid;
+  grid-template-columns: 0.8fr 3fr;
+  column-gap: 10px;
 }
 /* Stack columns in a single column */
 @media (max-width: 1024px) {
-    .card-info {
-        grid-template-columns: 1fr;
-    }
-    .card1 {
-        display: flex;
-        justify-content: start;
-    }
+  .card-info {
+    grid-template-columns: 1fr;
+  }
+  .card1 {
+    display: flex;
+    justify-content: start;
+  }
 }
 .card-info p {
-    margin: 0;
+  margin: 0;
 }
 .card1 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .card2 {
-    display: flex;
+  display: flex;
 }
 
 #exerciseInfo {
@@ -454,10 +454,9 @@ button[type="submit"] {
   font-family: var(--font-heading);
 }
 
-
 footer {
   background-color: #021f41; /* Dark blue */
-  color: #edeef0;            /* Light text */
+  color: #edeef0; /* Light text */
   text-align: center;
   padding: 1rem 0;
   font-size: 1rem;
