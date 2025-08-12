@@ -5,7 +5,7 @@ import { setupFavoriteMuscle } from "./myWorkout.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   aboutModal();
-  exercise();
+  exercise(); 
   setupFavoriteMuscle();
   motivation(); 
 
@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 async function loadMuscleGroups() {
-  const muscleSelect = document.getElementById("muscle");
+  const muscleSelect = document.getElementById("muscle-group");
 
   try {
     const response = await fetch("./data/muscleOptions.json");
