@@ -24,7 +24,9 @@ export default defineConfig(({ mode }) => {
       },
     },
     define: {
-      "import.meta.env.VITE_EXERCISEDB_API_KEY": JSON.stringify(env.VITE_EXERCISEDB_API_KEY),
+      "import.meta.env.VITE_EXERCISEDB_API_KEY": JSON.stringify(
+        env.VITE_EXERCISEDB_API_KEY,
+      ),
     },
   };
 });

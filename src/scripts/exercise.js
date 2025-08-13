@@ -2,7 +2,7 @@ const exerciseApiKey = import.meta.env.VITE_EXERCISEDB_API_KEY;
 
 if (!exerciseApiKey) {
   console.error(
-    "API key is missing. Set VITE_EXERCISEDB_API_KEY in .env for dev and on Netlify for prod."
+    "API key is missing. Set VITE_EXERCISEDB_API_KEY in .env for dev and on Netlify for prod.",
   );
 }
 
@@ -23,8 +23,7 @@ export function exercise() {
     const difficulty = document.getElementById("difficulty")?.value || "";
 
     if (!muscleGroup) {
-      exerciseResults.innerHTML =
-        `<p style="color:#b00020;">Please select a muscle group first.</p>`;
+      exerciseResults.innerHTML = `<p style="color:#b00020;">Please select a muscle group first.</p>`;
       return;
     }
 
@@ -34,13 +33,12 @@ export function exercise() {
 
 async function exerciseApiFetch({ muscleGroup, difficulty, exerciseResults }) {
   if (!exerciseApiKey) {
-    exerciseResults.innerHTML =
-      `<p style="color:#b00020;">API key missing. Please check your configuration.</p>`;
+    exerciseResults.innerHTML = `<p style="color:#b00020;">API key missing. Please check your configuration.</p>`;
     return;
   }
 
   const apiUrl = `https://exercisedb.p.rapidapi.com/exercises/target/${encodeURIComponent(
-    muscleGroup
+    muscleGroup,
   )}`;
 
   try {
@@ -64,8 +62,7 @@ async function exerciseApiFetch({ muscleGroup, difficulty, exerciseResults }) {
     displayExercises(limited, exerciseResults, difficulty);
   } catch (error) {
     console.error("Error fetching exercises:", error);
-    exerciseResults.innerHTML =
-      `<p style="color:#b00020;">Error fetching data. Please try again later.</p>`;
+    exerciseResults.innerHTML = `<p style="color:#b00020;">Error fetching data. Please try again later.</p>`;
   }
 }
 
@@ -73,8 +70,7 @@ function displayExercises(exercises, container, chosenDifficulty) {
   container.innerHTML = "";
 
   if (!Array.isArray(exercises) || exercises.length === 0) {
-    container.innerHTML =
-      "<p>No exercises found for this muscle group.</p>";
+    container.innerHTML = "<p>No exercises found for this muscle group.</p>";
     return;
   }
 

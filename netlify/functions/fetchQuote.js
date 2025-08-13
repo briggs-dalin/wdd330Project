@@ -4,7 +4,6 @@ export const handler = async (event, context) => {
   try {
     const response = await fetch(apiUrl);
 
-    
     console.log(`ZenQuotes API response status: ${response.status}`);
     console.log(
       `ZenQuotes API response headers:`,
@@ -12,7 +11,7 @@ export const handler = async (event, context) => {
     );
 
     if (!response.ok) {
-      const errorBody = await response.text(); 
+      const errorBody = await response.text();
       return {
         statusCode: response.status,
         headers: {
