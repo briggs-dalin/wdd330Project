@@ -3,13 +3,16 @@ import { exercise } from "./exercise.js";
 import { motivation } from "./motivation.js";
 import { setupFavoriteMuscle } from "./myWorkout.js";
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   aboutModal();
-  exercise();
-  setupFavoriteMuscle();
   motivation();
 
-  loadMuscleGroups();
+  // Load options before wiring up favorite selection (so it visibly selects)
+  await loadMuscleGroups();
+  setupFavoriteMuscle();
+
+  // Wire up exercise form last
+  exercise();
 });
 
 async function loadMuscleGroups() {

@@ -1,5 +1,5 @@
 export function setupFavoriteMuscle() {
-  const muscleInput = document.getElementById("muscle");
+  const muscleInput = document.getElementById("muscle-group");
   const saveButton = document.getElementById("saveFavoriteMuscle");
 
   if (!muscleInput || !saveButton) {

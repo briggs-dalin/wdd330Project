@@ -342,7 +342,7 @@ select {
 form label.top {
   display: block;
   padding-top: 1rem;
-  color: var(--accent1-color);
+  color: var(--accent-color);
   font-size: 0.8rem;
 }
 
