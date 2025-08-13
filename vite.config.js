@@ -10,6 +10,8 @@ export default defineConfig(({ mode }) => {
 
   return {
     root: "src/",
+    publicDir: "../public",
+    
     server: {
       host: "localhost",
       port: 3000,

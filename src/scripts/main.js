@@ -7,11 +7,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   aboutModal();
   motivation();
 
-  
   await loadMuscleGroups();
   setupFavoriteMuscle();
 
-  
   exercise();
 });
 
